@@ -155,61 +155,82 @@ int32_t main()
          cin>>n;
          vi v;
          input(v,n);
-          int sum=0;
-          sum=accumulate(all(v),sum);
-          if(sum<0||v[0]<0||v[n-1]>0)
-          {
-            cout<<"NO";
-          }
-          else
-          {
-            if(n==1&&v[0]==0)
-            {
-                cout<<"YES";
-            }
-            else
-            {
-                int idx=-1;
-            for(int i=n-1;i>=0;i--)
-            {
-               if(v[i]!=0)
+         sortall(v);
+         int cnt0=count(all(v),0);
+
+           map<int,int> m;
+           vi temp;
+           int cntx = 0;
+           bool flag2=false;
+           for(int i=0;i<n;i++) 
+           {
+               if(v[i] != 0)
                {
-                 idx=i;
-                 break;
+                  flag2=true;                
+               } 
+               else
+               {
+                cntx++;
                }
-            }
-            bool flag=true;
-            int second,first=0;
-            for(int i=idx;i>=1;i--)
-            {
-              if(i==idx)
-              {
-                second=abs(v[idx]);
-                first=0;
-              }
-              else
-              {
-                int temp=second;
-                first=temp;
-                second=abs(v[i]-first);
-                if(second==0)
-                {
-                    flag=false;
+               m[v[i]]++;
+               if(m[v[i]] <= 3) 
+               {
+                temp.pb(v[i]);
+               }
+            
+           }
+           if(flag2 == false) {
+               cout <<"YES" <<endl;
+               continue;
+           }
+           sort(all(temp));
+           if(cntx == n-2 && (temp[0] +temp.back()==0)) {
+               cout<<"YES"<<endl;
+               continue;
+           }
+           
+           if(temp.size() > 10) {
+               cout<<"NO"<<endl;
+               
+           } 
+           else 
+           {
+               int sz = temp.size();
+               bool flag = true;
+               for(int i = 0; i < sz; ++i) 
+               {
+                   for(int j = i + 1; j < sz; ++j) 
+                   {
+                       for(int k = j + 1; k < sz; ++k) 
+                       {
+                           if(m.count(temp[i] + temp[j] + temp[k]) == 0) 
+                           {
+                               flag = false;
+                               break;
+                           }
+                       }
+                       if(flag==false)
+                       {
+                        break;
+                       }
+                   }
+                   if(flag==false)
+                   {
                     break;
-                }
-              }
-            }
-            if(v[0]!=second||flag==false)
-            {
-                cout<<"NO";
-            }
-            else
-            {
+                   }
+               }
+               if(flag)
+               { 
                 cout<<"YES";
-            }
-            }
-          }
-          cout<<endl;
-       } 
+               }
+               else 
+               { 
+                cout<<"NO";
+                }
+               cout<<endl;
+           }
+           
+         
+        }
     return 0;
 }

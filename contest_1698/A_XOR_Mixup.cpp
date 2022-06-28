@@ -155,61 +155,26 @@ int32_t main()
          cin>>n;
          vi v;
          input(v,n);
-          int sum=0;
-          sum=accumulate(all(v),sum);
-          if(sum<0||v[0]<0||v[n-1]>0)
-          {
-            cout<<"NO";
-          }
-          else
-          {
-            if(n==1&&v[0]==0)
-            {
-                cout<<"YES";
-            }
-            else
-            {
-                int idx=-1;
-            for(int i=n-1;i>=0;i--)
-            {
-               if(v[i]!=0)
-               {
-                 idx=i;
-                 break;
-               }
-            }
-            bool flag=true;
-            int second,first=0;
-            for(int i=idx;i>=1;i--)
-            {
-              if(i==idx)
-              {
-                second=abs(v[idx]);
-                first=0;
-              }
-              else
-              {
-                int temp=second;
-                first=temp;
-                second=abs(v[i]-first);
-                if(second==0)
-                {
-                    flag=false;
-                    break;
-                }
-              }
-            }
-            if(v[0]!=second||flag==false)
-            {
-                cout<<"NO";
-            }
-            else
-            {
-                cout<<"YES";
-            }
-            }
-          }
-          cout<<endl;
+         int xr=0;
+         map<int,int>mp;
+         for(auto x:v)
+         {
+            mp[x]++;
+            xr=xr^x;
+         }
+         int ans=0;
+         for(int i=0;i<n;i++)
+         {
+             int temp=xr;
+             xr=xr^v[i];
+             if(mp.find(xr)!=mp.end())
+             {
+                ans=xr;
+                break;
+             }
+         }
+         cout<<ans<<endl;
+
        } 
     return 0;
 }

@@ -151,65 +151,27 @@ int32_t main()
     fast;
        test 
        {
-         int n;
-         cin>>n;
+         int n,k;
+         cin>>n>>k;
          vi v;
          input(v,n);
-          int sum=0;
-          sum=accumulate(all(v),sum);
-          if(sum<0||v[0]<0||v[n-1]>0)
-          {
-            cout<<"NO";
-          }
-          else
-          {
-            if(n==1&&v[0]==0)
+         if(k==1)
+         {
+            cout<<(n-1)/2;
+         }
+         else
+         {
+            int ans=0;
+            for(int i=1;i<n-1;i++)
             {
-                cout<<"YES";
-            }
-            else
-            {
-                int idx=-1;
-            for(int i=n-1;i>=0;i--)
-            {
-               if(v[i]!=0)
+               if(v[i-1]+v[i+1]<v[i])
                {
-                 idx=i;
-                 break;
+                ans++;
                }
             }
-            bool flag=true;
-            int second,first=0;
-            for(int i=idx;i>=1;i--)
-            {
-              if(i==idx)
-              {
-                second=abs(v[idx]);
-                first=0;
-              }
-              else
-              {
-                int temp=second;
-                first=temp;
-                second=abs(v[i]-first);
-                if(second==0)
-                {
-                    flag=false;
-                    break;
-                }
-              }
-            }
-            if(v[0]!=second||flag==false)
-            {
-                cout<<"NO";
-            }
-            else
-            {
-                cout<<"YES";
-            }
-            }
-          }
-          cout<<endl;
+            cout<<ans;
+         }
+         cout<<endl;
        } 
     return 0;
 }
