@@ -1,0 +1,4 @@
+05 Bob
+00 Tie
+40 Alice
+87 Alice

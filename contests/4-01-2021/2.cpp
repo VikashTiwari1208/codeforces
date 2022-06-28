@@ -1,0 +1,135 @@
+#pragma GCC optimize("Ofast")
+#include <iostream>
+#include <bits/stdc++.h>
+#define int long long 
+using namespace std;
+#define endl "\n"
+#define M 1000000007LL
+#define fast ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL)
+#define mp make_pair
+#define pb push_back
+#define fi first
+#define se second
+typedef pair<int,int> pii;
+typedef vector<int> vi;
+typedef vector<pii> vpii;
+typedef vector<vi> vvi;
+typedef unordered_map<int,int>umpii;
+typedef map<int,int> mpii;
+typedef multimap<int,int> mmpii;
+typedef unordered_set<int> useti;
+typedef set<int> seti;
+typedef multiset<int> mseti;
+long long binpow(long long base, long long exp, int mod)
+{
+   long long res = 1;
+   while (exp > 0)
+   {
+      if (exp % 2 == 1)
+         res = (res * base) % mod;
+      exp = exp >> 1;
+      base = (base * base) % mod;
+   }
+   return res;
+}
+
+long long mod(long long x)
+{
+   return ((x % M + M) % M);
+}
+
+long long add(long long a, long long b)
+{
+   return mod(mod(a) + mod(b));
+}
+
+long long mul(long long a, long long b)
+{
+   return mod(mod(a) * mod(b));
+}
+bool isPrime(int n) 
+{ 
+    // Corner case 
+    if (n <= 1) 
+        return false; 
+  
+    // Check from 2 to n-1 
+    for (int i = 2; i*i<= n; i++) 
+        if (n % i == 0) 
+            return false; 
+  
+    return true; 
+} 
+bool findPartiion(int arr[], int n)
+{
+    int sum = 0;
+    int i, j;
+ 
+    // Calculate sum of all elements
+    for (i = 0; i < n; i++)
+        sum += arr[i];
+ 
+    if (sum % 2 != 0)
+        return false;
+ 
+    bool part[sum / 2 + 1][n + 1];
+ 
+    // initialize top row as true
+    for (i = 0; i <= n; i++)
+        part[0][i] = true;
+ 
+    // initialize leftmost column,
+    // except part[0][0], as 0
+    for (i = 1; i <= sum / 2; i++)
+        part[i][0] = false;
+ 
+    // Fill the partition table in bottom up manner
+    for (i = 1; i <= sum / 2; i++) {
+        for (j = 1; j <= n; j++) {
+            part[i][j] = part[i][j - 1];
+            if (i >= arr[j - 1])
+                part[i][j] = part[i][j]
+                             || part[i - arr[j - 1]][j - 1];
+        }
+    }
+ 
+    /* // uncomment this part to print table
+    for (i = 0; i <= sum/2; i++)
+    {
+    for (j = 0; j <= n; j++)
+        cout<<part[i][j];
+    cout<<endl;
+    } */
+ 
+    return part[sum / 2][n];
+}
+int32_t main()
+{
+    fast;
+      #ifndef ONLINE_JUDGE
+       freopen("input.txt","r",stdin);
+       freopen("output1.txt","w",stdout);
+       #endif
+       int t;
+       cin>>t;
+       while(t--)
+       {
+           int n;
+           cin>>n;
+           int arr[n];
+           for(auto &x:arr)
+           {
+               cin>>x;
+           }
+          if(findPartiion(arr,n))
+          {
+              cout<<"YES";
+          }
+          else
+          {
+              cout<<"NO";
+          }
+          cout<<endl;
+       }
+    return 0;
+}
